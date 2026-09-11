@@ -50,29 +50,6 @@ export default function ForecastPage() {
   };
 
 
-  // Loading Text Cycler
-  const [loadingStep, setLoadingStep] = useState(0);
-  const loadingSteps = [
-    "Scanning 4+ Crore Indian Court Judgments...",
-    "Extracting factual matrices & jurisdictional bounds...",
-    "Identifying matching precedent outcomes...",
-    "Calculating realistic litigation timelines...",
-    "Estimating total legal expenditures...",
-    "Drafting ANUMAN AI Intelligence Brief..."
-  ];
-
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    if (isSubmitting) {
-      interval = setInterval(() => {
-        setLoadingStep((prev) => (prev < loadingSteps.length - 1 ? prev + 1 : prev));
-      }, 4000);
-    } else {
-      setLoadingStep(0);
-    }
-    return () => clearInterval(interval);
-  }, [isSubmitting]);
-
 
   // Common Fields
   const [vertical, setVertical] = useState("");
@@ -385,28 +362,21 @@ export default function ForecastPage() {
       {isSubmitting && (
         <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#000000]/90 backdrop-blur-md animate-in fade-in duration-500">
 
-          <div className="relative flex items-center justify-center mb-12">
+          <div className="relative flex items-center justify-center mb-12 h-40 w-40">
             {/* Outer spinning ring */}
             <div className="absolute w-40 h-40 border-t-2 border-l-2 border-blue-500 rounded-full animate-spin"></div>
             {/* Inner spinning ring */}
             <div className="absolute w-32 h-32 border-b-2 border-r-2 border-purple-500 rounded-full animate-[spin_2s_reverse_infinite]"></div>
-            {/* Center Logo */}
-
           </div>
 
           <h2 className="text-3xl font-extrabold text-white mb-6">Analyzing Your Dispute</h2>
 
-          <div className="min-h-[3rem] w-full flex justify-center items-center px-4">
-            <p className="text-xl text-blue-400 font-medium animate-pulse text-center w-full block">
-              {loadingSteps[loadingStep]}
-            </p>
-          </div>
+          <p className="text-xl text-blue-400 font-medium animate-pulse text-center px-4">
+            Scanning precedents and generating your forecast...
+          </p>
 
           <div className="w-64 h-1.5 bg-white/10 rounded-full mt-8 overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-1000 ease-out rounded-full"
-              style={{ width: `${((loadingStep + 1) / loadingSteps.length) * 100}%` }}
-            ></div>
+            <div className="h-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-[loading_2s_ease-in-out_infinite]"></div>
           </div>
           <p className="text-sm text-gray-500 mt-4">This usually takes a couple of minutes.</p>
         </div>
