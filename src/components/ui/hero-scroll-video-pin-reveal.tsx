@@ -58,16 +58,10 @@ export const HeroScrollVideoReveal: React.FC<HeroScrollVideoRevealProps> = ({
   const tagRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Ensure video plays smoothly
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(() => {});
-    }
-
     // Optional Lenis smooth scroll
     let lenis: any = null;
     let lenisTicker: ((time: number) => void) | null = null;
+
 
     import('@studio-freight/lenis')
       .then(({ default: Lenis }) => {
