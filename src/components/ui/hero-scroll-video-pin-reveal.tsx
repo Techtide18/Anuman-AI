@@ -372,20 +372,14 @@ export const HeroScrollVideoReveal: React.FC<HeroScrollVideoRevealProps> = ({
                 />
               )}
 
-              {/* Drone Video */}
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                crossOrigin="anonymous"
-                className="w-full h-full object-cover bg-[#000000]"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: '#000000' }}
-              >
-                <source src={videoSrc} type="video/mp4" />
-              </video>
+              {/* Google Drive Video Embed */}
+              <iframe
+                src="https://drive.google.com/file/d/1nPTB2VBjJsEjznjqN6GGix31a0vTcCbC/preview"
+                className="w-full h-full"
+                style={{ width: '100%', height: '100%', border: 'none', backgroundColor: '#000000' }}
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              />
 
               {/* Centered Glassmorphic Play Icon */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
