@@ -25,6 +25,56 @@ const VERTICALS = [
   { id: "family", name: "Family Law (Financial Settlement)" }
 ];
 
+const LOADING_STEPS = [
+  "Scanning 4+ Crore Indian Court Judgments...",
+  "Parsing case facts & extracting legal issues...",
+  "Matching jurisdictional precedents...",
+  "Fetching full-text judgments from Indian Kanoon...",
+  "Extracting factual matrices & arguments...",
+  "Identifying matching precedent outcomes...",
+  "Analyzing award amounts & penalty structures...",
+  "Calculating realistic litigation timelines...",
+  "Estimating total legal expenditures...",
+  "Computing settlement parameters & ZOPA...",
+  "Running risk-adjusted probability models...",
+  "Drafting ANUMAN AI Intelligence Brief..."
+];
+
+function LoadingSteps() {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(() => {
+    if (currentStep < LOADING_STEPS.length - 1) {
+      const timer = setTimeout(() => {
+        setCurrentStep(prev => prev + 1);
+      }, 7000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentStep]);
+
+  return (
+    <div className="w-full max-w-md space-y-3 text-left">
+      {LOADING_STEPS.map((step, idx) => (
+        <div
+          key={idx}
+          className={`flex items-center gap-3 transition-all duration-500 ${idx > currentStep ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
+        >
+          {idx < currentStep ? (
+            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs">✓</span>
+          ) : idx === currentStep ? (
+            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500 animate-pulse"></span>
+          ) : (
+            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-white/10"></span>
+          )}
+          <span className={`text-sm ${idx < currentStep ? 'text-green-400' : idx === currentStep ? 'text-blue-400 font-medium' : 'text-gray-600'}`}>
+            {step}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function ForecastPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -360,25 +410,19 @@ export default function ForecastPage() {
 
       {/* BEAUTIFUL FULLSCREEN LOADING OVERLAY */}
       {isSubmitting && (
-        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#000000]/90 backdrop-blur-md animate-in fade-in duration-500">
+        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#000000]/95 backdrop-blur-md animate-in fade-in duration-500">
+          <div className="w-full max-w-lg flex flex-col items-center">
+            <div className="relative flex items-center justify-center mb-10 h-32 w-32">
+              <div className="absolute w-32 h-32 border-t-2 border-l-2 border-blue-500 rounded-full animate-spin"></div>
+              <div className="absolute w-24 h-24 border-b-2 border-r-2 border-purple-500 rounded-full animate-[spin_2s_reverse_infinite]"></div>
+            </div>
 
-          <div className="relative flex items-center justify-center mb-12 h-40 w-40">
-            {/* Outer spinning ring */}
-            <div className="absolute w-40 h-40 border-t-2 border-l-2 border-blue-500 rounded-full animate-spin"></div>
-            {/* Inner spinning ring */}
-            <div className="absolute w-32 h-32 border-b-2 border-r-2 border-purple-500 rounded-full animate-[spin_2s_reverse_infinite]"></div>
+            <h2 className="text-3xl font-extrabold text-white mb-8 text-center">Analyzing Your Dispute</h2>
+
+            <LoadingSteps />
+
+            <p className="text-sm text-gray-500 mt-6 text-center">This usually takes a couple of minutes.</p>
           </div>
-
-          <h2 className="text-3xl font-extrabold text-white mb-6">Analyzing Your Dispute</h2>
-
-          <p className="text-xl text-blue-400 font-medium animate-pulse text-center px-4">
-            Scanning precedents and generating your forecast...
-          </p>
-
-          <div className="w-64 h-1.5 bg-white/10 rounded-full mt-8 overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-[loading_2s_ease-in-out_infinite]"></div>
-          </div>
-          <p className="text-sm text-gray-500 mt-4">This usually takes a couple of minutes.</p>
         </div>
       )}
 
@@ -947,6 +991,18 @@ export default function ForecastPage() {
                   ))}
                 </div>
               </div>
+            </div>
+
+            {/* Generate Brief Button */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <button
+                onClick={generateBrief}
+                className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/25 flex items-center justify-center gap-3"
+              >
+                <FileText className="w-5 h-5" />
+                Generate Settlement &amp; Mediation Brief
+              </button>
+              <p className="text-xs text-gray-500 mt-2 text-center">Downloads a printable PDF summary of your entire forecast analysis.</p>
             </div>
 
           </div>
