@@ -369,6 +369,7 @@ export default function ForecastPage() {
 
       setResults(data);
       setShowResults(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {
       console.error(err);
       setError(err.message);
