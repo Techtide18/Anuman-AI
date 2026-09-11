@@ -907,28 +907,24 @@ export default function ForecastPage() {
 
               {vertical === 'family' && (
                 <>
-                  {/* Monthly Maintenance Card */}
+                  {/* Financial Breakdown Card */}
                   <div className="bg-[#0a0a0a] rounded-xl shadow-sm border border-white/10 p-6">
                     <div className="flex items-center gap-2 mb-4">
                       <Activity className="h-5 w-5 text-pink-500" />
-                      <h2 className="text-lg font-semibold text-white">Financial Breakdown</h2>
+                      <h2 className="text-lg font-semibold text-white">Maintenance Estimate</h2>
                     </div>
                     <div className="space-y-4">
                       <div className="flex justify-between items-center py-3 border-b border-white/5">
-                        <span className="text-sm text-gray-400">Estimated Monthly Maintenance</span>
-                        <span className="text-base font-bold text-pink-400">₹{formatINR(Math.round(results.forecast.awardMedian / 12))}/mo</span>
-                      </div>
-                      <div className="flex justify-between items-center py-3 border-b border-white/5">
                         <span className="text-sm text-gray-400">Likely Annual Maintenance</span>
-                        <span className="text-base font-bold text-white">₹{formatINR(results.forecast.awardMedian)}</span>
+                        <span className="text-base font-bold text-pink-400">₹{formatINR(results.forecast.awardMedian)}/yr</span>
                       </div>
                       <div className="flex justify-between items-center py-3 border-b border-white/5">
-                        <span className="text-sm text-gray-400">Arrears Exposure (backlog period)</span>
-                        <span className="text-base font-bold text-yellow-400">₹{formatINR(Math.round(results.forecast.awardMedian / 12 * (results.backlog?.disposalTimeMonths || 30)))}</span>
+                        <span className="text-sm text-gray-400">Estimated Daily Rate</span>
+                        <span className="text-base font-bold text-white">₹{formatINR(Math.round(results.forecast.awardMedian / 365))}/day</span>
                       </div>
                       <div className="flex justify-between items-center py-3">
-                        <span className="text-sm text-gray-400">Respondent&apos;s Income (declared)</span>
-                        <span className="text-base font-bold text-green-400">₹{formatINR(Number(respondentIncome))}/mo</span>
+                        <span className="text-sm text-gray-400">Arrears Exposure (backlog period)</span>
+                        <span className="text-base font-bold text-yellow-400">₹{formatINR(Math.round(results.forecast.awardMedian * ((results.backlog?.disposalTimeMonths || 30) / 12)))}</span>
                       </div>
                     </div>
                   </div>
