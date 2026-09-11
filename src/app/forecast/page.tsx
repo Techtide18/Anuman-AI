@@ -53,11 +53,11 @@ function LoadingSteps() {
   }, [currentStep]);
 
   return (
-    <div className="w-full max-w-md space-y-3 text-left">
+    <div className="w-full max-w-md space-y-3 flex flex-col items-center">
       {LOADING_STEPS.map((step, idx) => (
         <div
           key={idx}
-          className={`flex items-center gap-3 transition-all duration-500 ${idx > currentStep ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
+          className={`flex items-center gap-3 transition-all duration-500 w-full max-w-sm ${idx > currentStep ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
         >
           {idx < currentStep ? (
             <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs">✓</span>
@@ -997,7 +997,7 @@ export default function ForecastPage() {
             <div className="mt-8 pt-6 border-t border-white/10">
               <button
                 onClick={generateBrief}
-                className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-lg rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/25 flex items-center justify-center gap-3"
+                className="w-full py-4 px-6 bg-white hover:bg-gray-100 text-black font-bold text-lg rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center gap-3"
               >
                 <FileText className="w-5 h-5" />
                 Generate Settlement &amp; Mediation Brief

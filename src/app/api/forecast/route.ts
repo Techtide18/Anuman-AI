@@ -106,7 +106,7 @@ export async function POST(req: Request) {
       console.log("-> Reasoning:", queryJson.keywordReasoning);
       console.log("-> Query:", searchInput);
       
-      const searchUrl = `https://api.indiankanoon.org/search/?formInput=${encodeURIComponent(searchInput)}&fromdate=1-1-2024&pagenum=0&maxpages=1`;
+      const searchUrl = `https://api.indiankanoon.org/search/?formInput=${encodeURIComponent(searchInput)}&fromdate=1-1-2024&pagenum=0&pagesize=10&maxpages=1`;
       console.log(`[3/6] EXECUTING INDIAN KANOON API: ${searchUrl}`);
 
       const searchRes = await fetch(searchUrl, { method: 'POST', headers: { 'Authorization': `Token ${IK_TOKEN}`, 'Accept': 'application/json' } });
