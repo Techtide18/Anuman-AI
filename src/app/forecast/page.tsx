@@ -907,41 +907,48 @@ export default function ForecastPage() {
 
               {vertical === 'family' && (
                 <>
+                  {/* Monthly Maintenance Card */}
                   <div className="bg-[#0a0a0a] rounded-xl shadow-sm border border-white/10 p-6">
-                    <div className="flex items-center gap-2 mb-6">
+                    <div className="flex items-center gap-2 mb-4">
                       <Activity className="h-5 w-5 text-pink-500" />
-                      <h2 className="text-lg font-semibold text-white">Maintenance Distribution</h2>
+                      <h2 className="text-lg font-semibold text-white">Financial Breakdown</h2>
                     </div>
-                    <div className="h-64 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={[
-                          { name: 'Minimum', amount: results.forecast.awardMin },
-                          { name: 'Median', amount: results.forecast.awardMedian },
-                          { name: 'Maximum', amount: results.forecast.awardMax },
-                        ]}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-                          <XAxis dataKey="name" stroke="#888" fontSize={12} tickLine={false} axisLine={false} />
-                          <YAxis stroke="#888" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(val) => formatChartAxis(val, true)} width={65} />
-                          <Tooltip cursor={{ fill: '#222' }} contentStyle={{ backgroundColor: '#111', borderColor: '#333', color: '#fff' }} itemStyle={{ color: '#ec4899' }} formatter={(value) => `₹${formatINR(value)}`} />
-                          <Bar dataKey="amount" fill="#ec4899" radius={[4, 4, 0, 0]} barSize={60} />
-                        </BarChart>
-                      </ResponsiveContainer>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center py-3 border-b border-white/5">
+                        <span className="text-sm text-gray-400">Estimated Monthly Maintenance</span>
+                        <span className="text-base font-bold text-pink-400">₹{formatINR(Math.round(results.forecast.awardMedian / 12))}/mo</span>
+                      </div>
+                      <div className="flex justify-between items-center py-3 border-b border-white/5">
+                        <span className="text-sm text-gray-400">Likely Annual Maintenance</span>
+                        <span className="text-base font-bold text-white">₹{formatINR(results.forecast.awardMedian)}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-3 border-b border-white/5">
+                        <span className="text-sm text-gray-400">Arrears Exposure (backlog period)</span>
+                        <span className="text-base font-bold text-yellow-400">₹{formatINR(Math.round(results.forecast.awardMedian / 12 * (results.backlog?.disposalTimeMonths || 30)))}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-3">
+                        <span className="text-sm text-gray-400">Respondent&apos;s Income (declared)</span>
+                        <span className="text-base font-bold text-green-400">₹{formatINR(Number(respondentIncome))}/mo</span>
+                      </div>
                     </div>
                   </div>
 
+                  {/* Settle Now vs Fight Card */}
                   <div className="bg-[#0a0a0a] rounded-xl shadow-sm border border-white/10 p-6">
-                    <div className="flex items-center gap-2 mb-6">
+                    <div className="flex items-center gap-2 mb-4">
                       <TrendingUp className="h-5 w-5 text-yellow-500" />
-                      <h2 className="text-lg font-semibold text-white">Lump Sum Settlement Range</h2>
+                      <h2 className="text-lg font-semibold text-white">Settle Now vs. Litigate</h2>
                     </div>
-                    <div className="h-64 w-full flex flex-col justify-center items-center">
-                      <p className="text-sm text-gray-400 mb-4 text-center">Based on typical capitalized value of maintenance</p>
-                      <div className="text-4xl font-bold text-yellow-500 mb-2">₹{formatINR(results.settlement.recommendedMax)}</div>
-                      <p className="text-sm text-yellow-300">Expected One-Time Settlement</p>
-                      <div className="w-full mt-8 bg-gray-800 h-2 rounded-full relative">
-                        <div className="absolute top-0 h-2 bg-yellow-500/50 rounded-full" style={{ left: '20%', right: '20%' }}></div>
-                        <div className="absolute -top-6 left-[20%] text-xs text-gray-400">Min</div>
-                        <div className="absolute -top-6 right-[20%] text-xs text-gray-400">Max</div>
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-lg bg-green-900/20 border border-green-700/30">
+                        <p className="text-xs text-green-400 font-semibold uppercase tracking-wider mb-1">Recommended Settlement (Lump Sum)</p>
+                        <p className="text-2xl font-bold text-green-300">₹{formatINR(results.settlement.recommendedMin)} – ₹{formatINR(results.settlement.recommendedMax)}</p>
+                        <p className="text-xs text-gray-400 mt-1">Settle in weeks. No court costs.</p>
+                      </div>
+                      <div className="p-4 rounded-lg bg-red-900/20 border border-red-700/30">
+                        <p className="text-xs text-red-400 font-semibold uppercase tracking-wider mb-1">Cost of Full Litigation</p>
+                        <p className="text-2xl font-bold text-red-300">₹{formatINR(results.settlement.costOfDelay)}</p>
+                        <p className="text-xs text-gray-400 mt-1">Lost over ~{results.settlement.delayYears} years in legal costs + delay.</p>
                       </div>
                     </div>
                   </div>
