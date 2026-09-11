@@ -49,20 +49,11 @@ export const HeroScrollVideoReveal: React.FC<HeroScrollVideoRevealProps> = ({
   tags = DEFAULT_TAGS,
   subText = 'And the journey continues beyond the summit...',
   videoSrc = 'https://res.cloudinary.com/ulgfi6yl/video/upload/v1788321431/856381-hd_1920_1080_30fps.mp4',
-  bottomText = (
-    <>
-      Where every scroll feels
-      <br />
-      intentional
-    </>
-  ),
+  bottomText = null,
   badgeImgSrc = 'https://cdn.21st.dev/assets/mirror/23/23a474e4cceeaf6b98729302d689998195e5534241cbc33ee2c64dfc351c16d6.png',
   className = '',
 }) => {
   const benefitRef = useRef<HTMLDivElement>(null);
-  const videoWrapperRef = useRef<HTMLDivElement>(null);
-  const videoBoxRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const paraRef = useRef<HTMLParagraphElement>(null);
   const tagRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -143,106 +134,9 @@ export const HeroScrollVideoReveal: React.FC<HeroScrollVideoRevealProps> = ({
       }
     });
 
-    // ── Responsive MatchMedia for Small, Mid, and Large screens ─────────────
-    const mm = gsap.matchMedia();
-
-    // 1. Small Screens (Mobile < 640px)
-    mm.add('(max-width: 639.9px)', () => {
-      gsap.set(videoBoxRef.current, { clipPath: 'circle(18% at 50% 50%)' });
-
-      const vpTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: videoWrapperRef.current,
-          start: 'top top',
-          end: '+=1500',
-          scrub: 1.2,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          onRefresh: (self) => {
-            if (self.spacer) self.spacer.style.backgroundColor = '#000000';
-            if (self.pin) self.pin.style.backgroundColor = '#000000';
-          },
-          onToggle: (self) => {
-            if (self.spacer) self.spacer.style.backgroundColor = '#000000';
-            if (self.pin) self.pin.style.backgroundColor = '#000000';
-          },
-        },
-      });
-
-      vpTl.fromTo(
-        videoBoxRef.current,
-        { clipPath: 'circle(18% at 50% 50%)' },
-        { clipPath: 'circle(150% at 50% 50%)', ease: 'none' }
-      );
-    });
-
-    // 2. Mid Screens (Tablets / Phablets 640px - 1023.9px)
-    mm.add('(min-width: 640px) and (max-width: 1023.9px)', () => {
-      gsap.set(videoBoxRef.current, { clipPath: 'circle(12% at 50% 50%)' });
-
-      const vpTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: videoWrapperRef.current,
-          start: 'top top',
-          end: '+=2000',
-          scrub: 1.3,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          onRefresh: (self) => {
-            if (self.spacer) self.spacer.style.backgroundColor = '#000000';
-            if (self.pin) self.pin.style.backgroundColor = '#000000';
-          },
-          onToggle: (self) => {
-            if (self.spacer) self.spacer.style.backgroundColor = '#000000';
-            if (self.pin) self.pin.style.backgroundColor = '#000000';
-          },
-        },
-      });
-
-      vpTl.fromTo(
-        videoBoxRef.current,
-        { clipPath: 'circle(12% at 50% 50%)' },
-        { clipPath: 'circle(150% at 50% 50%)', ease: 'none' }
-      );
-    });
-
-    // 3. Large Screens (Desktop >= 1024px)
-    mm.add('(min-width: 1024px)', () => {
-      gsap.set(videoBoxRef.current, { clipPath: 'circle(8% at 50% 50%)' });
-
-      const vpTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: videoWrapperRef.current,
-          start: 'top top',
-          end: '+=2500',
-          scrub: 1.5,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          onRefresh: (self) => {
-            if (self.spacer) self.spacer.style.backgroundColor = '#000000';
-            if (self.pin) self.pin.style.backgroundColor = '#000000';
-          },
-          onToggle: (self) => {
-            if (self.spacer) self.spacer.style.backgroundColor = '#000000';
-            if (self.pin) self.pin.style.backgroundColor = '#000000';
-          },
-        },
-      });
-
-      vpTl.fromTo(
-        videoBoxRef.current,
-        { clipPath: 'circle(8% at 50% 50%)' },
-        { clipPath: 'circle(150% at 50% 50%)', ease: 'none' }
-      );
-    });
-
     return () => {
       if (split && split.revert) split.revert();
       revealTl.kill();
-      mm.revert();
       ScrollTrigger.getAll().forEach((t) => t.kill());
       if (lenis && lenisTicker) {
         gsap.ticker.remove(lenisTicker);
@@ -338,60 +232,15 @@ export const HeroScrollVideoReveal: React.FC<HeroScrollVideoRevealProps> = ({
         </div>
 
         {/* ── Video Pin Section ───────────────────────────────────────────── */}
-        <div className="relative w-full bg-[#000000]" style={{ backgroundColor: '#000000' }}>
-          <div
-            ref={videoWrapperRef}
-            className="w-full h-screen flex justify-center items-center relative overflow-hidden bg-[#000000]"
-            style={{ backgroundColor: '#000000' }}
-          >
-            {/* Absolute solid dark underlay behind the video expansion circle */}
-            <div
-              className="absolute inset-0 w-full h-full pointer-events-none bg-[#000000]"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: '#000000',
-                zIndex: 1,
-              }}
+        <div className="relative w-full max-w-6xl mx-auto mt-20 px-4 sm:px-8 bg-[#000000] pb-20">
+          <div className="w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative">
+            <iframe
+              src="https://drive.google.com/file/d/1nPTB2VBjJsEjznjqN6GGix31a0vTcCbC/preview"
+              className="absolute inset-0 w-full h-full"
+              style={{ border: 'none', backgroundColor: '#000000' }}
+              allow="autoplay; fullscreen"
+              allowFullScreen
             />
-
-            <div
-              ref={videoBoxRef}
-              className="relative w-full h-full overflow-hidden flex justify-center items-center bg-[#000000] will-change-[clip-path]"
-              style={{ backgroundColor: '#000000', zIndex: 2 }}
-            >
-              {/* Rotating Circular Text Badge */}
-              {badgeImgSrc && (
-                <img
-                  src={badgeImgSrc}
-                  alt="rotating badge"
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 z-20 pointer-events-none animate-[spin_18s_linear_infinite] opacity-90 select-none"
-                />
-              )}
-
-              {/* Google Drive Video Embed */}
-              <iframe
-                src="https://drive.google.com/file/d/1nPTB2VBjJsEjznjqN6GGix31a0vTcCbC/preview"
-                className="w-full h-full"
-                style={{ width: '100%', height: '100%', border: 'none', backgroundColor: '#000000' }}
-                allow="autoplay; fullscreen"
-                allowFullScreen
-              />
-
-              {/* Centered Glassmorphic Play Icon */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex justify-center items-center shadow-xl">
-                  <img
-                    src="https://cdn.21st.dev/assets/mirror/54/54e9fbc136451340e6617de6907da8643bdc3d2ea455a3e76f5d3e9257d78c62.png"
-                    alt="play"
-                    className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 object-contain"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
