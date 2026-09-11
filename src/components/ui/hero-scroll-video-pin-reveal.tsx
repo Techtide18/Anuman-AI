@@ -327,11 +327,11 @@ export const HeroScrollVideoReveal: React.FC<HeroScrollVideoRevealProps> = ({
           </div>
 
           {/* Right side: Lady Justice Image */}
-          <div className="hidden lg:block flex-1 relative h-[650px] w-full mt-12 lg:mt-0">
+          <div className="hidden lg:block flex-1 relative h-[650px] w-full mt-12 lg:mt-0 overflow-hidden">
             <img 
               src="/assets/lady-justice.jpg" 
               alt="Lady Justice" 
-              className="absolute inset-0 w-full h-full object-contain object-right drop-shadow-2xl opacity-90 transition-transform duration-1000 scale-[1.3] xl:scale-[1.5] origin-right -translate-y-16 xl:-translate-y-24"
+              className="absolute bottom-0 right-0 w-full h-full object-contain object-right-bottom drop-shadow-2xl opacity-90 transition-transform duration-1000 scale-[1.1] xl:scale-[1.2] origin-bottom-right"
               style={{ mixBlendMode: 'lighten' }}
             />
           </div>
